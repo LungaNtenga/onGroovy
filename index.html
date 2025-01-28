@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ongroove Map Layout</title>
+    
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <div class="logo-text">Ongroovy</div>
+                <div class="logo-tagline">Discover your rhythm</div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search locations...">
+                <div id="status"></div>
+            </div>
+            <div class="location-list">
+                <div class="location-item">Current Location</div>
+                <div class="location-item">Recent Location 1</div>
+                <div class="location-item">Recent Location 2</div>
+                <div class="location-item">Recent Location 3</div>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <!-- Popular Areas -->
+        <div class="popular-areas">
+            <h2>Popular Areas</h2>
+            <div class="popular-list">
+                <div class="area-card">
+                    <div class="area-number" id="number">1</div>
+                    <img src="images/1.png" alt="Downtown" class="area-image">
+                    <div class="area-info">
+                        <h3>Downtown</h3>
+                        <h6 hidden>Club</h6>
+                        <p>City center with shops and restaurants</p>
+                    </div>
+                    <button class="view-button">View</button>
+                </div>
+                <div class="area-card">
+                    <div class="area-number" id="number">2</div>
+                    <img src="images/2.png" alt="Park District" class="area-image">
+                    <div class="area-info">
+                        <h3>Park District</h3>
+                        <h6 hidden>Resort</h6>
+                        <p>Green spaces and recreation</p>
+                    </div>
+                    <button class="view-button">View</button>
+                </div>
+                <div class="area-card">
+                    <div class="area-number" id="number">3</div>
+                    <img src="images/3.png" alt="Historic District" class="area-image">
+                    <div class="area-info">
+                        <h3>Historic District</h3>
+                        <h6 hidden>Educational</h6>
+                        <p>Cultural landmarks and museums</p>
+                    </div>
+                    <button class="view-button">View</button>
+                </div>
+                <div class="area-card">
+                    <div class="area-number" id="number">4</div>
+                    <img src="images/4.png" alt="Shopping Mall" class="area-image">
+                    <div class="area-info">
+                        <h3>Shopping Mall</h3>
+                        <h6 hidden>Club</h6>
+                        <p>Modern retail complex with entertainment</p>
+                    </div>
+                    <button class="view-button">View</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <script src="index.js">
+    </script>
+</body>
+</html>
