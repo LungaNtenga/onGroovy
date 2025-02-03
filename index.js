@@ -1,4 +1,4 @@
-
+ // This is a JS
     let map, currentLocationMarker, circle;
     const statusDiv = document.getElementById('status');
 
@@ -82,7 +82,7 @@
 
     // Create 10km and 30km radius circles
 
-      //10KM
+      //1.10KM
     L.circle([position.coords.latitude, position.coords.longitude], {
         radius: 10000,
         color: '#f32121',
@@ -91,7 +91,7 @@
         weight: 1
     }).addTo(map);
 
-    //30KM
+    //2.30KM
     L.circle([position.coords.latitude, position.coords.longitude], {
         radius: 30000,
         color: '#f32121',
@@ -111,11 +111,53 @@
     // This is a pop of evenues on the map
     locations.forEach(loc => {
         const marker = L.marker([loc.lat, loc.lng], { icon: beerIcon }).addTo(map);
-        marker.bindPopup(`<div class="area-info modal" display="flex">
-            <h3>${loc.name}</h3>
-            <img src="path_to_your_image.jpg" alt="Image" style="width: 24px; height: 24px; border-radius: 50%;">
-            <button class="view-button">View Details</button>
-        </div>`);
+        marker.bindPopup(`<div class="area-info modal popup-container">
+            <h3 class="popup-title">${loc.name}</h3>
+            <div class="venue-type popup-type">${loc.type}</div>
+            <img src="/images/1.png" alt="Venue Image" class="popup-image">
+            <button class="popup-button">View Details</button>
+        </div>
+        <style>
+            .popup-container {
+                text-align: left;
+                padding: 8px; /* Reduced padding */
+                width: 220px; /* Reduced width */
+            }
+            .popup-title {
+                margin: 0 0 5px 0;
+                color: #333;
+                font-size: 1.1em; /* Slightly smaller font */
+            }
+            .popup-type {
+                color: #666;
+                font-size: 0.85em; /* Slightly smaller font */
+                margin-bottom: 8px; /* Reduced margin */
+            }
+            .popup-image {
+                width: 100%;
+                height: 130px; /* Reduced height */
+                border-radius: 5px;
+                display: block;
+                object-fit: cover;
+                margin: 8px 0; /* Reduced margin */
+            }
+            .popup-button {
+                background: #f32121;
+                color: white;
+                border: none;
+                padding: 8px 16px; /* Reduced padding */
+                border-radius: 4px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 0.9em; /* Slightly smaller font */
+                margin-top: 8px; /* Reduced margin */
+            }
+        </style>
+        `);
+         // Clicking oustide will close the pop-up
+        map.on('click', () => {
+            marker.closePopup();
+        });
     });
 };
 
@@ -219,256 +261,311 @@ function createVenueModal() {
     modalContainer.id = 'venueModal';
     modalContainer.innerHTML = `
     <style>
-    #venueModal {
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+        #venueModal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    #venueModal.show {
-        display: flex;
-    }
+        #venueModal.show {
+            display: flex;
+        }
 
-    .modal-content {
-        background-color: #fefefe;
-        border-radius: 12px;
-        width: 95%;
-        max-width: 800px;
-        height: 90vh;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
+        .modal-content {
+            background-color: #fefefe;
+            border-radius: 12px;
+            width: 95%;
+            max-width: 800px;
+            height: 90vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-    .modal-header-container {
-        position: sticky;
-        top: 0;
-        background-color: #fefefe;
-        z-index: 2;
-        padding: 32px;
-        border-bottom: 1px solid #e0e0e0;
-    }
+        .modal-header-container {
+            position: sticky;
+            top: 0;
+            background-color: #fefefe;
+            z-index: 2;
+            padding: 32px;
+            border-bottom: 1px solid #e0e0e0;
+        }
 
-    .modal-title-group {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 0;
-    }
+        .modal-title-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 0;
+        }
 
-    .modal-title-group h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        line-height: 1.2;
-    }
+        .modal-title-group h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
 
-    .modal-number-badge {
-        width: 45px;
-        height: 45px;
-        background-color: #f32121;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
+        .modal-number-badge {
+            width: 45px;
+            height: 45px;
+            background-color: #f32121;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
-    .modal-number-badge span {
-        color: white;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
+        .modal-number-badge span {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
 
-    .modal-header {
-        flex: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-        border: none;
-    }
+        .modal-header {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
 
-    .modal-close {
-        background: none;
-        border: none;
-        font-size: 28px;
-        cursor: pointer;
-        color: #888;
-        position: absolute;
-        right: 32px;
-        top: 32px;
-        transition: color 0.2s;
-        padding: 0;
-        line-height: 1;
-    }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+            position: absolute;
+            right: 32px;
+            top: 32px;
+            transition: color 0.2s;
+            padding: 0;
+            line-height: 1;
+        }
 
-    .modal-close:hover {
-        color: #333;
-    }
+        .modal-close:hover {
+            color: #333;
+        }
 
-    .modal-scrollable-content {
-        flex: 1;
-        overflow-y: scroll;
-        padding: 32px;
-        scrollbar-width: thin;
-        scrollbar-color: #888 #f1f1f1;
-    }
+        .modal-scrollable-content {
+            flex: 1;
+            overflow-y: scroll;
+            padding: 32px;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
 
-    .modal-scrollable-content::-webkit-scrollbar {
-        width: 8px;
-    }
+        .modal-scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
 
-    .modal-scrollable-content::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
+        .modal-scrollable-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
 
-    .modal-scrollable-content::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
+        .modal-scrollable-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
 
-    .modal-scrollable-content::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+        .modal-scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
 
-    .venue-type-container {
+        .venue-type-container {
+        }
 
-    }
+        .venue-type-container h3 {
+            font-size: 1.2rem;
+            color: #00000;
+        }
 
-    .venue-type-container h3 {
-        font-size: 1.2rem;
-        color: #00000;
-    }
+        .venue-type-container p {
+            line-height: 1.6;
+        }
 
-    .venue-type-container p {
-        line-height: 1.6;
-    }
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0 0 32px 0;
+        }
 
-    .main-image {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin: 0 0 32px 0;
-    }
+        .image-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
 
-    .image-carousel {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 24px;
-        margin: 32px 0;
-    }
+        .carousel-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-    .carousel-image {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: transform 0.2s;
-    }
+        .carousel-image:hover {
+            transform: scale(1.05);
+        }
 
-    .carousel-image:hover {
-        transform: scale(1.05);
-    }
+        /* Hide images beyond the 6th by default */
+        .image-carousel .carousel-image:nth-child(n+7) {
+            display: none;
+        }
 
-    .modal-footer {
-        position: sticky;
-        bottom: 0;
-        background-color: #fefefe;
-        padding: 24px 32px;
-        border-top: 1px solid #e0e0e0;
-    }
+        /* Show all images when .show-all is added */
+        .image-carousel.show-all .carousel-image {
+            display: block;
+        }
 
-    .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        .modal-footer {
+            position: sticky;
+            bottom: 0;
+            background-color: #fefefe;
+            padding: 24px 32px;
+            border-top: 1px solid #e0e0e0;
+        }
 
-    .footer-left {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .social-links {
-        display: flex;
-        gap: 24px;
-        margin: 0;
-        padding: 0;
-    }
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-    .social-links a {
-        color: #333;
-        font-size: 24px;
-        transition: color 0.2s;
-    }
+        .social-links {
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
 
-    .social-links a:hover {
-        color: #f32121;
-    }
+        .social-links a {
+            color: #333;
+            font-size: 24px;
+            transition: color 0.2s;
+        }
 
-    .venue-info {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
+        .social-links a:hover {
+            color: #f32121;
+        }
 
-    .venue-info p {
-        margin: 0;
-        color: #555;
-    }
+        .venue-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-    .book-button {
-        background-color: #f32121;
-        color: white;
-        padding: 14px 36px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
+        .venue-info p {
+            margin: 0;
+            color: #555;
+        }
 
-    .book-button:hover {
-        background-color: #d81c1c;
-    }
+        .book-button {
+            background-color: #f32121;
+            color: white;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
 
-    .view-all {
-        width: 100%;
-        background-color: #f32121;
-        color: white;
-        padding: 14px 36px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .view-all i {
-        margin-left: 8px;
-    }
+        .book-button:hover {
+            background-color: #d81c1c;
+        }
 
-    .view-all:hover{
-        background-color: #d81c1c;
-    }
+        .view-all {
+            width: 100%;
+            background-color: #f32121;
+            color: white;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .view-all i {
+            margin-left: 8px;
+        }
+
+        .view-all:hover {
+            background-color: #d81c1c;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.show {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .lightbox-close:hover {
+            color: #f32121;
+        }
     </style>
 
     <div class="modal-content">
@@ -503,8 +600,7 @@ function createVenueModal() {
                 <img class="carousel-image" src="images/2.9.png" alt="Venue Image 9">
             </div>
             <div>
-            <button class="view-all">View all<i class="fa-sharp-duotone fa-solid fa-angle-down"></i>
-            </button>
+                <button class="view-all">View all<i class="fa-sharp-duotone fa-solid fa-angle-down"></i></button>
             </div>
         </div>
 
@@ -526,17 +622,282 @@ function createVenueModal() {
             </div>
         </div>
     </div>
-`;
+
+    <!-- Lightbox HTML -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="Lightbox Image" class="lightbox-media">
+            <button class="lightbox-close">&times;</button>
+        </div>
+    </div>
+    `;
 
     document.body.appendChild(modalContainer);
     const modal = document.getElementById('venueModal');
-    const closeButtons = modal.querySelectorAll('.modal-close, .modal-btn-close');
+    const closeButtons = modal.querySelectorAll('.modal-close');
+    const imageCarousel = modal.querySelector('.image-carousel');
+    const viewAllButton = modal.querySelector('.view-all');
+
     
+    // Toggle images and button text
+    viewAllButton.addEventListener('click', () => {
+        imageCarousel.classList.toggle('show-all');
+        const buttonText = viewAllButton.childNodes[0];
+        buttonText.data = imageCarousel.classList.contains('show-all') ? 'Hide' : 'View all';
+    });
+
+    // Close modal and reset state
     closeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             modal.classList.remove('show');
+            imageCarousel.classList.remove('show-all');
+            const buttonText = viewAllButton.childNodes[0];
+            buttonText.data = 'View all';
         });
     });
+
+    // Lightbox functionality
+    const lightbox = modal.querySelector('.lightbox');
+    const lightboxMedia = modal.querySelector('.lightbox-media');
+    const lightboxClose = modal.querySelector('.lightbox-close');
+
+    // Open lightbox when an image is clicked
+    imageCarousel.addEventListener('click', (e) => {
+        if (e.target.classList.contains('carousel-image')) {
+            lightboxMedia.src = e.target.src;
+            lightboxMedia.alt = e.target.alt;
+            lightbox.classList.add('show');
+        }
+    });
+
+    // Close lightbox
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('show');
+    });
+
+    // Close lightbox when clicking outside the content
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('show');
+        }
+    });
+
+        // Add the drawer HTML
+        const drawer = document.createElement('div');
+        drawer.id = 'drawer';
+        drawer.innerHTML = `
+        <div class="drawer-content">
+        <button class="drawer-close">&times;</button>
+        <h3 id="drawer-venue-name">Book Reservation for <span id="selected-venue-name"></span></h3>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+            
+            <div class="table-selection">
+                <h4>Select a Table</h4>
+                <div class="table-grid">
+                    <!-- Example tables -->
+                    <button type="button" class="table-button" data-table="101">101</button>
+                    <button type="button" class="table-button" data-table="102">102</button>
+                    <button type="button" class="table-button" data-table="103">103</button>
+                    <button type="button" class="table-button" data-table="104">104</button>
+                    <button type="button" class="table-button" data-table="105">105</button>
+                    <button type="button" class="table-button" data-table="106">106</button>
+                    <button type="button" class="table-button" data-table="107">107</button>
+                    <button type="button" class="table-button" data-table="108">108</button>
+                    <button type="button" class="table-button" data-table="109">109</button>
+                    <button type="button" class="table-button" data-table="110">110</button>
+                    <!-- Add more tables as needed -->
+                </div>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+        `;
+        document.body.appendChild(drawer);
+    
+        // Add drawer styles
+        const style = document.createElement('style');
+        style.textContent = `
+        /* Drawer Styles */
+        #drawer {
+            position: fixed;
+            top: 0;
+            right: -400px; /* Start off-screen */
+            width: 400px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    
+        #drawer.open {
+            right: 0; /* Slide in */
+        }
+    
+        .drawer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    
+        .drawer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    
+        #drawer-venue-name {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+    
+        #drawer form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    
+        #drawer form label {
+            font-size: 1rem;
+            color: #555;
+        }
+    
+        #drawer form input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+    
+        #drawer form button[type="submit"] {
+            background-color: #f32121;
+            color: white;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        #drawer form button[type="submit"]:hover {
+            background-color: #d81c1c;
+        }
+    
+        /* Table Selection Grid */
+        .table-selection {
+            margin-top: 20px;
+        }
+    
+        .table-selection h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+        }
+    
+        .table-button {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+    
+        .table-button:hover {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+    
+        .table-button.selected {
+            background-color: #f32121;
+            color: white;
+            border-color: #f32121;
+        }
+        `;
+        document.head.appendChild(style); 
+        
+        // Drawer functionality
+        const bookButton = modal.querySelector('.book-button');
+        const drawerCloseButton = drawer.querySelector('.drawer-close');
+        const selectedVenueName = drawer.querySelector('#selected-venue-name');
+        const tableButtons = drawer.querySelectorAll('.table-button');
+        
+        // Open the drawer when the book button is clicked
+        bookButton.addEventListener('click', () => {
+            // Get the venue name from the modal title
+            const venueName = modal.querySelector('#modalTitle').textContent;
+            
+            // Update the drawer's venue name
+            selectedVenueName.textContent = venueName;
+            
+            // Open the drawer
+            drawer.classList.add('open');
+        });
+        
+        // Close the drawer when the close button is clicked
+        drawerCloseButton.addEventListener('click', () => {
+            drawer.classList.remove('open');
+        });
+        
+        // Optional: Close the drawer when clicking outside of it
+        document.addEventListener('click', (event) => {
+            if (!drawer.contains(event.target) && !bookButton.contains(event.target)) {
+                drawer.classList.remove('open');
+            }
+        });
+        
+        // Table selection logic
+        let selectedTable = null;
+        
+        tableButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Deselect the previously selected table
+                if (selectedTable) {
+                    selectedTable.classList.remove('selected');
+                }
+        
+                // Select the clicked table
+                button.classList.add('selected');
+                selectedTable = button;
+        
+                // Store the selected table number (optional)
+                const tableNumber = button.getAttribute('data-table');
+                console.log(`Selected table: ${tableNumber}`);
+            });
+        });
 
     return modal;
 }
@@ -564,5 +925,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('modal-venue-type').textContent = type;
             modal.classList.add('show');
         });
+
+
     });
+
+
 });
