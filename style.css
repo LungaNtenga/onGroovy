@@ -1,3 +1,4 @@
+/* This is a css */
 * {
     margin: 0;
     padding: 0;
@@ -203,5 +204,134 @@ body {
         font-weight: bold;
 }
 
+/* Drawer Styles */
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Start off-screen */
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+}
 
+.drawer.open {
+    right: 0; /* Slide in */
+}
 
+.drawer-content {
+    padding: 20px;
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Mobile Responsiveness - Screens 768px or less */
+@media (max-width: 768px) {
+    /* Adjust the container layout for mobile */
+    .container {
+        grid-template-columns: 1fr; /* Single column layout */
+        grid-template-rows: auto auto auto; /* Three rows: sidebar, map, popular areas */
+        gap: 10px; /* Reduce gap between elements */
+        padding: 10px; /* Reduce padding */
+    }
+
+    /* Sidebar adjustments */
+    .sidebar {
+        grid-row: 1; /* Move sidebar to the top */
+        padding: 10px; /* Reduce padding */
+        border-radius: 0; /* Remove border radius */
+    }
+
+    .logo-container {
+        padding: 10px 0; /* Reduce padding */
+    }
+
+    .logo-text {
+        font-size: 24px; /* Reduce font size */
+    }
+
+    .logo-tagline {
+        font-size: 12px; /* Reduce font size */
+    }
+
+    .search-container {
+        margin-bottom: 10px; /* Reduce margin */
+    }
+
+    .search-input {
+        padding: 8px; /* Reduce padding */
+    }
+
+    .location-list {
+        max-height: 200px; /* Limit height for mobile */
+    }
+
+    .location-item {
+        padding: 8px; /* Reduce padding */
+    }
+
+    /* Map container adjustments */
+    .map-container {
+        grid-column: 1; /* Full width */
+        grid-row: 2; /* Move map to the second row */
+        height: 300px; /* Reduce height */
+    }
+
+    /* Popular areas adjustments */
+    .popular-areas {
+        grid-column: 1; /* Full width */
+        grid-row: 3; /* Move popular areas to the third row */
+        padding: 10px; /* Reduce padding */
+    }
+
+    .popular-list {
+        gap: 10px; /* Reduce gap between cards */
+    }
+
+    .area-card {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: flex-start; /* Align items to the start */
+        padding: 10px; /* Reduce padding */
+    }
+
+    .area-image {
+        width: 100%; /* Full width */
+        height: 120px; /* Increase height for better visibility */
+        margin-right: 0; /* Remove margin */
+        margin-bottom: 10px; /* Add bottom margin */
+    }
+
+    .area-info {
+        width: 100%; /* Full width */
+    }
+
+    .view-button {
+        width: 100%; /* Full width */
+        margin-left: 0; /* Remove margin */
+        margin-top: 10px; /* Add top margin */
+    }
+
+    /* Drawer adjustments */
+    .drawer {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .drawer-content {
+        padding: 15px; /* Reduce padding */
+    }
+
+    .drawer-close {
+        top: 5px; /* Adjust position */
+        right: 5px; /* Adjust position */
+    }
+}
